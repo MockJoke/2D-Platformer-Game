@@ -78,6 +78,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1114,6 +1115,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Plants_12: 21300016
+      Plants_1: 21300002
+      Plants_19: 21300022
+      Plants_3: 21300006
+      Plants_8: 21300012
+      Plants_4: 21300010
+      Plants_0: 21300000
+      Plants_23: 21300026
+      Plants_2: 21300004
+      Plants_11: 21300014
+      Plants_26: 21300028
+      Plants_17: 21300034
+      Plants_6: 21300008
+      Plants_15: 21300018
+      Plants_18: 21300020
+      Plants_24: 21300030
+      Plants_22: 21300024
+      Plants_16: 21300032
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

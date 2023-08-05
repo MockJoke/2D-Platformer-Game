@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -328,6 +329,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      EllenHealth_Gaining02: 21300006
+      EllenHealth_Losing02: 21300016
+      EllenHealth_Full: 21300010
+      EllenHealth_Gaining01: 21300004
+      EllenHealth_Losing01: 21300014
+      EllenHealth_Losing00: 21300012
+      EllenHealth_Gaining00: 21300002
+      EllenHealth_Gaining03: 21300008
+      EllenHealth_Empty: 21300000
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

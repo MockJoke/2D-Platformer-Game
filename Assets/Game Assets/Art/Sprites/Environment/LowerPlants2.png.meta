@@ -48,6 +48,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -691,6 +692,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      LowerPlants2_12: 21300012
+      LowerPlants2_13: 21300014
+      LowerPlants2_11: 21300010
+      LowerPlants2_0: 21300000
+      LowerPlants2_10: 21300008
+      LowerPlants2_8: 21300006
+      LowerPlants2_3: 21300004
+      LowerPlants2_1: 21300002
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

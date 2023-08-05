@@ -51,6 +51,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -328,6 +329,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      BossShield_DefaultBorder: 21300000
+      BossShield_HandleFlash: 21300012
+      BossShield_Fill: 21300004
+      BossShield_Handle: 21300002
+      BossShield_SmashedBorder: 21300016
+      BossShield_SphereFill: 21300006
+      BossShield_HighlightedBorder: 21300014
+      BossShield_Damaged: 21300008
+      BossShield_Defeated: 21300010
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -48,6 +48,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -884,6 +885,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      HangingPlants1_0: 21300000
+      HangingPlants1_7: 21300010
+      HangingPlants1_4: 21300006
+      HangingPlants1_1: 21300002
+      HangingPlants1_6: 21300008
+      HangingPlants1_9: 21300014
+      HangingPlants1_8: 21300012
+      HangingPlants1_2: 21300004
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

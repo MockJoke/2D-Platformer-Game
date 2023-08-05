@@ -96,6 +96,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -688,6 +689,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      GameOverEllen_23: 21300046
+      GameOverEllen_19: 21300038
+      GameOverEllen_17: 21300034
+      GameOverEllen_6: 21300012
+      GameOverEllen_9: 21300018
+      GameOverEllen_22: 21300044
+      GameOverEllen_12: 21300024
+      GameOverEllen_21: 21300042
+      GameOverEllen_7: 21300014
+      GameOverEllen_8: 21300016
+      GameOverEllen_16: 21300032
+      GameOverEllen_13: 21300026
+      GameOverEllen_1: 21300002
+      GameOverEllen_5: 21300010
+      GameOverEllen_4: 21300008
+      GameOverEllen_18: 21300036
+      GameOverEllen_10: 21300020
+      GameOverEllen_11: 21300022
+      GameOverEllen_20: 21300040
+      GameOverEllen_14: 21300028
+      GameOverEllen_0: 21300000
+      GameOverEllen_2: 21300004
+      GameOverEllen_15: 21300030
+      GameOverEllen_3: 21300006
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

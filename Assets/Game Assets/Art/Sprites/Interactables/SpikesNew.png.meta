@@ -66,6 +66,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -985,6 +986,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      SpikesNew_4: 21300004
+      SpikesNew_5: 21300006
+      SpikesNew_0: 21300000
+      SpikesNew_14: 21300016
+      SpikesNew_16: 21300020
+      SpikesNew_10: 21300010
+      SpikesNew_19: 21300026
+      SpikesNew_11: 21300012
+      SpikesNew_8: 21300008
+      SpikesNew_1: 21300002
+      SpikesNew_15: 21300018
+      SpikesNew_17: 21300022
+      SpikesNew_13: 21300014
+      SpikesNew_18: 21300024
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

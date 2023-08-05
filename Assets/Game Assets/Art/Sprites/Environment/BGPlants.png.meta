@@ -81,6 +81,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -839,6 +840,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      BGPlants_26: 21300036
+      BGPlants_1: 21300002
+      BGPlants_24: 21300032
+      BGPlants_14: 21300018
+      BGPlants_20: 21300024
+      BGPlants_22: 21300028
+      BGPlants_9: 21300014
+      BGPlants_18: 21300022
+      BGPlants_25: 21300034
+      BGPlants_2: 21300004
+      BGPlants_3: 21300006
+      BGPlants_15: 21300020
+      BGPlants_6: 21300012
+      BGPlants_10: 21300016
+      BGPlants_21: 21300026
+      BGPlants_0: 21300000
+      BGPlants_4: 21300008
+      BGPlants_5: 21300010
+      BGPlants_23: 21300030
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
