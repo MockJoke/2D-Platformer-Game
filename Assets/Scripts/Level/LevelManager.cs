@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     /* to only read the value of instance */ 
     public static LevelManager Instance { get { return instance; } }
 
-    public string[] Levels;
+    public string[] Levels; 
 
     private void Awake()
     {

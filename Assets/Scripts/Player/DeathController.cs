@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 //when a player falls off the platform
 public class DeathController : MonoBehaviour
 {
-    private HealthController healthController; 
+    private HealthController healthController;
+
+    private void Awake()
+    {
+        healthController = FindObjectOfType<HealthController>();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
-            Debug.Log("Player died");
             SoundManager.Instance.Play(SoundManager.Sounds.PlayerDeath);
         }
     }
@@ -21,7 +26,7 @@ public class DeathController : MonoBehaviour
     {
         healthController.LoseLife(); 
 
-        Invoke("ReloadScene", 2f);
+        Invoke(nameof(ReloadScene), 2f);
     }
 
     private void ReloadScene()

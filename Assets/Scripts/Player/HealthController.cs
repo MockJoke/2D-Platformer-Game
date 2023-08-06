@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 
@@ -7,7 +5,7 @@ public class HealthController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
 
-    public Image[] lives; 
+    [SerializeField] private Image[] lives; 
     private int livesCount = 3;
 
     public void LoseLife()

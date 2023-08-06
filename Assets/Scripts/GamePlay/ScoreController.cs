@@ -1,39 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
-using TMPro; 
+using TMPro;
+using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI levelIndicatorText;
-
+    
+    [SerializeField] private Image[] keys;
+    
     private LevelLoader levelLoader;
     private LevelManager levelManager; 
 
-    private int score = 0; 
+    private int keysCount = 0; 
 
     private void Awake()
     {
-        scoreText = GetComponent<TextMeshProUGUI>();
         levelIndicatorText = GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
     {
-        RefreshUI();     
+        ResetKeys();
     }
 
-    public void IncreaseScore(int increment)
+    private void ResetKeys()
     {
-        score += increment;
-        RefreshUI(); 
+        keysCount = 0;
+        
+        for (int i = 0; i < keys.Length; i++)
+        {
+            keys[i].gameObject.SetActive(false);
+        }
     }
-
-    private void RefreshUI()
+    
+    public void AddKey()
     {
-        scoreText.text = "Keys: " + score;
-        //levelIndicatorText.text = levelManager.Levels[SceneManager.GetActiveScene().buildIndex]; 
+        keysCount++;
+        
+        if(keysCount > 0)
+        {
+            keys[keysCount - 1].gameObject.SetActive(true);
+
+            if (keysCount == 0)
+            {
+                keys[keysCount].gameObject.SetActive(false);
+            }
+        }
     }
 }
