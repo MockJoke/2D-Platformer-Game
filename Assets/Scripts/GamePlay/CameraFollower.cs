@@ -13,6 +13,7 @@ public class CameraFollower : MonoBehaviour
     {
         offset = transform.position - target.position; 
     }
+    
     void Update()
     {
         Follow();

@@ -1,96 +1,103 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement; 
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerMovement playerMovement; 
-    public ScoreController scoreController;
+    [SerializeField] private PlayerMovement playerMovement; 
+    [SerializeField] private ScoreController scoreController;
     [SerializeField] private GameOverController gameOverController;
     private DeathController deathController;
-    [SerializeField] private HealthController healthController; 
 
     public Animator playerAnimator;
 
     [Header("Movement Controls")]
     public float runSpeed;   
     private float horizontalMove = 0f;
-    public bool jump;
-    public bool crouch; 
+    public bool isJumping;
+    public bool isCrouching; 
     
-    void Update()
+    #region MONOBEHAVIOUR METHODS
+    private void Awake()
     {
-        runAnim(); 
-        jumpAnim();
-        crouchAnim(); 
+        deathController = FindObjectOfType<DeathController>();
     }
 
-    void runAnim()
+    private void Update()
+    {
+        runAnim();
+        crouchAnimTrigger();
+    }
+    
+    private void FixedUpdate()
+    {
+        // Move our character 
+        playerMovement.Move(horizontalMove * Time.fixedDeltaTime, isCrouching, isJumping);
+        isJumping = false;
+    }
+    #endregion
+    
+    #region ANIMATION TRIGGERS
+    private void runAnim()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         playerAnimator.SetFloat("speed", Mathf.Abs(horizontalMove));
     }
 
-    void jumpAnim()
+    private void jumpAnimTrigger()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            jump = true;
-            playerAnimator.SetBool("isJumping", true);
-        }
+        isJumping = true;
+        playerAnimator.SetBool("isJumping", true);
     }
 
-    void crouchAnim()
+    private void crouchAnimTrigger()
     {
+        //isCrouching = true;
         if (Input.GetButtonDown("Crouch"))
         {
-            crouch = true;
+            isCrouching = true;
         }
         else if (Input.GetButtonUp("Crouch"))
         {
-            crouch = false;
+            isCrouching = false;
         }
     }
-
-    private void FixedUpdate()
-    {
-        // Move our character 
-        playerMovement.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-        jump = false; 
-    }
-
-    void deathAnim()
+    
+    private void deathAnimTrigger()
     {
         playerAnimator.SetBool("isDying", true);
     }
 
-    void hurtAnim()
+    private void hurtAnimTrigger()
     {
         playerAnimator.SetBool("isHurt", true);
-        StartCoroutine(TimedelayForHurting()); 
+        StartCoroutine(TimeDelayForHurting()); 
     }
+    #endregion
 
-    public void OnLanding()
+    public void OnLanding(bool isGrounded)
     {
-        playerAnimator.SetBool("isJumping", false); 
+        playerAnimator.SetBool("isJumping", !isGrounded);
     }
 
     public void OnCrouching(bool IsCrouching)
     {
-        playerAnimator.SetBool("isCrouching", IsCrouching); 
+        playerAnimator.SetBool("isCrouching", IsCrouching);
+        crouchAnimTrigger();
     }
-
-
+    
     public void DamagePlayer()
     {
         playerMovement.hurtPlayer();
-        hurtAnim();
+        hurtAnimTrigger();
     }
 
     public void KillPlayer()
     {
-        deathAnim();
+        deathAnimTrigger();
 
         deathController.PlayerDied(); 
         gameOverController.GameOver();  
@@ -98,13 +105,43 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpKey()
     {
-        scoreController.IncreaseScore(1); 
+        scoreController.AddKey(); 
     }
 
-    IEnumerator TimedelayForHurting()
+    IEnumerator TimeDelayForHurting()
     {
         yield return new WaitForSeconds(0.5f);
         playerAnimator.SetBool("isHurt", false);
     }
+    
+    #region INPUT SYSTEM ACTION METHODS
+    // These are called from PlayerInput
+    
+    // When a joystick or arrow keys has been pushed. It stores the input Vector as a Vector3 to then be used by the smoothing function.
+    public void OnMovement(InputAction.CallbackContext value)
+    {
+        
+    }
 
+    public void OnJump(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            jumpAnimTrigger();
+        }
+    }
+
+    public void OnCrouch(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            crouchAnimTrigger();
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext value)
+    {
+        
+    }
+    #endregion
 }
