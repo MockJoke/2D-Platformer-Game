@@ -12,14 +12,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameOverController gameOverController;
     private DeathController deathController;
 
-    public Animator playerAnimator;
+    [SerializeField] private Animator playerAnimator;
 
     [Header("Movement Controls")]
-    public float runSpeed;   
+    [SerializeField] private float runSpeed;   
     private float horizontalMove = 0f;
-    public bool isJumping;
-    public bool isCrouching; 
     
+    [Header("Camera Movement")] 
+    [SerializeField] private Transform camFollowTarget;
+    [SerializeField] private float lookAheadAmount = 0.1f;
+    [SerializeField] private float lookAheadSpeed = 0.1f;
+
+    private float buttonPressedTime = 0f;
+    public float buttonPressWindow = 0.5f;
+    public float jumpCancelRate = 100f;
+    private bool jumpCancelled = false;
+    
+    private static readonly int isJumpingStringHash = Animator.StringToHash("isJumping");
+    private static readonly int xSpeedStringHash = Animator.StringToHash("HorizontalSpeed");
+    private static readonly int isDyingStringHash = Animator.StringToHash("isDying");
+    private static readonly int isHurtStringHash = Animator.StringToHash("isHurt");
+    private static readonly int isCrouchingStringHash = Animator.StringToHash("isCrouching");
+    private static readonly int ySpeedStringHash = Animator.StringToHash("VerticalSpeed");
+
     #region MONOBEHAVIOUR METHODS
     private void Awake()
     {
@@ -30,62 +45,105 @@ public class PlayerController : MonoBehaviour
     {
         runAnim();
         crouchAnimTrigger();
+
+        if (Input.GetKeyDown(KeyCode.Space) && playerMovement.isAirborne is false)
+        {
+            jumpAnimTrigger();
+            jumpCancelled = false;
+            buttonPressedTime = 0;
+
+            playerMovement.jumpForce = Mathf.Sqrt(playerMovement.jumpHeight * -2 * (Physics2D.gravity.y * playerMovement.playerRB.gravityScale));
+            playerMovement.isAirborne = true;
+        }
+
+        if (playerMovement.isJumping)
+        {
+            playerMovement.playerRB.velocity = new Vector2(playerMovement.playerRB.velocity.x, playerMovement.jumpForce);
+            buttonPressedTime += Time.deltaTime;
+            
+            if (Input.GetKeyUp(KeyCode.Space) && (buttonPressedTime < buttonPressWindow))
+            {
+                jumpCancelled = true;
+            }
+
+            if (playerMovement.playerRB.velocity.y < 0)
+            {
+                playerMovement.isJumping = false;
+                playerAnimator.SetBool(isJumpingStringHash, false);
+            }
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Space) || (buttonPressedTime > buttonPressWindow))
+        {
+            playerMovement.isJumping = false;
+            playerAnimator.SetBool(isJumpingStringHash, false);
+        }
     }
     
     private void FixedUpdate()
     {
+        if (jumpCancelled && playerMovement.isJumping && playerMovement.playerRB.velocity.y > 0)
+        {
+            playerMovement.playerRB.AddForce(Vector2.down * jumpCancelRate);
+        }
+        
         // Move our character 
-        playerMovement.Move(horizontalMove * Time.fixedDeltaTime, isCrouching, isJumping);
-        isJumping = false;
+        playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
+        //playerMovement.isJumping = false;
     }
     #endregion
+    
+    public void MoveCameraTarget(float xVelocity)
+    {
+        var localPosition = camFollowTarget.localPosition;
+        
+        localPosition = new Vector3(Mathf.Lerp(localPosition.x, lookAheadAmount * xVelocity, lookAheadSpeed * Time.deltaTime), localPosition.y, localPosition.z);
+        camFollowTarget.localPosition = localPosition;
+    }
     
     #region ANIMATION TRIGGERS
     private void runAnim()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        playerAnimator.SetFloat("speed", Mathf.Abs(horizontalMove));
+        playerAnimator.SetFloat(xSpeedStringHash, Mathf.Abs(horizontalMove));
+        playerAnimator.SetFloat(ySpeedStringHash, playerMovement.playerRB.velocity.y);
     }
 
     private void jumpAnimTrigger()
     {
-        isJumping = true;
-        playerAnimator.SetBool("isJumping", true);
+        playerMovement.isJumping = true;
+        playerAnimator.SetBool(isJumpingStringHash, true);
     }
 
     private void crouchAnimTrigger()
     {
-        //isCrouching = true;
         if (Input.GetButtonDown("Crouch"))
-        {
-            isCrouching = true;
-        }
+            playerMovement.isCrouching = true;
         else if (Input.GetButtonUp("Crouch"))
-        {
-            isCrouching = false;
-        }
+            playerMovement.isCrouching = false;
     }
     
     private void deathAnimTrigger()
     {
-        playerAnimator.SetBool("isDying", true);
+        playerAnimator.SetBool(isDyingStringHash, true);
     }
 
     private void hurtAnimTrigger()
     {
-        playerAnimator.SetBool("isHurt", true);
+        playerAnimator.SetBool(isHurtStringHash, true);
         StartCoroutine(TimeDelayForHurting()); 
     }
     #endregion
-
+    
     public void OnLanding(bool isGrounded)
     {
-        playerAnimator.SetBool("isJumping", !isGrounded);
+        playerMovement.isAirborne = !isGrounded;
+        //playerAnimator.SetBool(isJumpingStringHash, !isGrounded);
     }
 
     public void OnCrouching(bool IsCrouching)
     {
-        playerAnimator.SetBool("isCrouching", IsCrouching);
+        playerAnimator.SetBool(isCrouchingStringHash, IsCrouching);
         crouchAnimTrigger();
     }
     
@@ -111,7 +169,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator TimeDelayForHurting()
     {
         yield return new WaitForSeconds(0.5f);
-        playerAnimator.SetBool("isHurt", false);
+        playerAnimator.SetBool(isHurtStringHash, false);
     }
     
     #region INPUT SYSTEM ACTION METHODS
@@ -125,10 +183,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext value)
     {
-        if (value.started)
-        {
-            jumpAnimTrigger();
-        }
+        // if (value.started)
+        // {
+        //     jumpAnimTrigger();
+        // }
     }
 
     public void OnCrouch(InputAction.CallbackContext value)

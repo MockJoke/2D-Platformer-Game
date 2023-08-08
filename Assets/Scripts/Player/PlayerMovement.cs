@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-	[SerializeField] private float jumpForce = 400f;							// Amount of force added when the player jumps.
+	[SerializeField] public float jumpForce = 400f;								// Amount of force added when the player jumps.
+	[SerializeField] public float jumpHeight = 10f;							// Amount of force added when the player jumps.
 	[SerializeField] private float recoilForce = 50f;                           // Amount of force added when the player gets hurt.
 	[Range(0, 1)] 
 	[SerializeField] private float crouchSpeed = .36f;							// Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -14,24 +16,31 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private Transform groundCheck;                             // A position marking where to check if the player is grounded.
 	[SerializeField] private Transform ceilingCheck;                            // A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider;                  // A collider that will be disabled when crouching
+	[SerializeField] public float gravityScale = 1f;							//Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D). Also the value the player's rigidbody2D.gravityScale is set to.
+	[SerializeField] public float fallGravityScale = 2f;							
 	
 	[Range(0f, 1f)] 
 	[SerializeField] private float groundedRadius = .5f;						// Radius of the overlap circle to determine if grounded
 	[Range(0f, 1f)]
 	[SerializeField] private float ceilingRadius = .5f;							// Radius of the overlap circle to determine if the player can stand up
-	private bool grounded;														// Whether or not the player is grounded.
-	private Rigidbody2D playerRB;	
+	public bool grounded;														// Whether or not the player is grounded.
+	public Rigidbody2D playerRB { get; private set; }	
 	private bool facingRight = true;											// For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 scale;
-	private Vector2 lookDir; 
+	private Vector2 lookDir;
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
 	[Space]
 	[Header("Events")]
 	public BoolEvent OnLandEvent;
+
+	public bool isJumping { get; set; } = false;
+	public bool isAirborne { get; set; } = false;
+	
 	public BoolEvent onCrouchEvent;
+	public bool isCrouching { get; set; } = false;
 	private bool wasCrouching = false;
 	
 	#region MONOBEHAVIOUR METHODS
@@ -44,6 +53,16 @@ public class PlayerMovement : MonoBehaviour
 
 		if (onCrouchEvent == null)
 			onCrouchEvent = new BoolEvent();
+	}
+
+	private void Start()
+	{
+		SetGravityScale(gravityScale);
+	}
+
+	private void Update()
+	{
+		SetGravityScale(playerRB.velocity.y >= 0 ? gravityScale : fallGravityScale);
 	}
 
 	private void FixedUpdate()
@@ -88,6 +107,11 @@ public class PlayerMovement : MonoBehaviour
 	}
 	#endregion
     
+	public void SetGravityScale(float gScale)
+	{
+		playerRB.gravityScale = gScale;  
+	}
+	
 	public void Move(float move, bool crouch, bool jump)
 	{
 		// If crouching, check to see if the character can stand up
@@ -130,10 +154,11 @@ public class PlayerMovement : MonoBehaviour
 				}
 			}
             
+			var rbVelocity = playerRB.velocity;
 			// Move the character by finding the target velocity
-			Vector3 targetVelocity = new Vector2(move * 10f, playerRB.velocity.y);
+			Vector3 targetVelocity = new Vector2(move * 10f, rbVelocity.y);
 			// And then smoothing it out and applying it to the character
-			playerRB.velocity = Vector3.SmoothDamp(playerRB.velocity, targetVelocity, ref velocity, movementSmoothing);
+			playerRB.velocity = Vector3.SmoothDamp(rbVelocity, targetVelocity, ref velocity, movementSmoothing);
 
 			// If the input is moving the player right and the player is facing left...
 			if (move > 0 && !facingRight)
@@ -142,15 +167,17 @@ public class PlayerMovement : MonoBehaviour
 			else if (move < 0 && facingRight)
 				flipPlayer();
 		}
+		
 		// If the player should jump...
 		if (grounded && jump)
 		{
 			// Add a vertical force to the player.
 			grounded = false;
-			playerRB.AddForce(new Vector2(0f, jumpForce));
+			//playerRB.AddForce(new Vector2(0f, jumpForce));
+			//playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 		}
 	}
-
+	
 	private void flipPlayer()
 	{
 		// Switch the way the player is labelled as facing.

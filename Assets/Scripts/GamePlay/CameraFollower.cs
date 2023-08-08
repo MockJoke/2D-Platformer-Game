@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    public Transform target;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Transform target;
+    private Vector3 offset;
     [Range(1, 10)]
-    public float smoothFactor;
+    [SerializeField] private float smoothFactor;
 
     private void Awake()
     {
