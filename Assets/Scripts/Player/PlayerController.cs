@@ -15,19 +15,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
 
     [Header("Movement Controls")]
-    [SerializeField] private float runSpeed;   
+    [SerializeField] private float runSpeed = 40f;   
     private float horizontalMove = 0f;
     
     [Header("Camera Movement")] 
     [SerializeField] private Transform camFollowTarget;
     [SerializeField] private float lookAheadAmount = 0.1f;
     [SerializeField] private float lookAheadSpeed = 0.1f;
-
-    private float buttonPressedTime = 0f;
-    public float buttonPressWindow = 0.5f;
-    public float jumpCancelRate = 100f;
-    private bool jumpCancelled = false;
     
+    [Header("Input related fields for variable jump")]
+    private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
+    [SerializeField] private float buttonPressWindow = 0.5f;            // Threshold amount of time for the button input
+    private bool jumpCancelled = false;                                 // Bool to keep track of the jump input for cancellation
+    
+    // Animator hash strings
     private static readonly int isJumpingStringHash = Animator.StringToHash("isJumping");
     private static readonly int xSpeedStringHash = Animator.StringToHash("HorizontalSpeed");
     private static readonly int isDyingStringHash = Animator.StringToHash("isDying");
@@ -48,17 +49,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && playerMovement.isAirborne is false)
         {
-            jumpAnimTrigger();
+            jumpAnimTrigger(true);
             jumpCancelled = false;
             buttonPressedTime = 0;
-
-            playerMovement.jumpForce = Mathf.Sqrt(playerMovement.jumpHeight * -2 * (Physics2D.gravity.y * playerMovement.playerRB.gravityScale));
+            
+            playerMovement.SetJumpForce();
             playerMovement.isAirborne = true;
         }
 
         if (playerMovement.isJumping)
         {
-            playerMovement.playerRB.velocity = new Vector2(playerMovement.playerRB.velocity.x, playerMovement.jumpForce);
+            playerMovement.SetVelocity();
             buttonPressedTime += Time.deltaTime;
             
             if (Input.GetKeyUp(KeyCode.Space) && (buttonPressedTime < buttonPressWindow))
@@ -68,15 +69,13 @@ public class PlayerController : MonoBehaviour
 
             if (playerMovement.playerRB.velocity.y < 0)
             {
-                playerMovement.isJumping = false;
-                playerAnimator.SetBool(isJumpingStringHash, false);
+                jumpAnimTrigger(false);
             }
         }
         
         if (Input.GetKeyUp(KeyCode.Space) || (buttonPressedTime > buttonPressWindow))
         {
-            playerMovement.isJumping = false;
-            playerAnimator.SetBool(isJumpingStringHash, false);
+            jumpAnimTrigger(false);
         }
     }
     
@@ -84,10 +83,9 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpCancelled && playerMovement.isJumping && playerMovement.playerRB.velocity.y > 0)
         {
-            playerMovement.playerRB.AddForce(Vector2.down * jumpCancelRate);
+            playerMovement.AddCancelJumpForce();
         }
         
-        // Move our character 
         playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
         //playerMovement.isJumping = false;
     }
@@ -109,10 +107,12 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetFloat(ySpeedStringHash, playerMovement.playerRB.velocity.y);
     }
 
-    private void jumpAnimTrigger()
+    private void jumpAnimTrigger(bool status, bool setAnimationTrigger = true)
     {
-        playerMovement.isJumping = true;
-        playerAnimator.SetBool(isJumpingStringHash, true);
+        playerMovement.isJumping = status;
+        
+        if (setAnimationTrigger)
+            playerAnimator.SetBool(isJumpingStringHash, status);
     }
 
     private void crouchAnimTrigger()

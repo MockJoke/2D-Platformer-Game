@@ -4,8 +4,8 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-	[SerializeField] public float jumpForce = 400f;								// Amount of force added when the player jumps.
-	[SerializeField] public float jumpHeight = 10f;							// Amount of force added when the player jumps.
+	[SerializeField] private float jumpForce = 10f;								// Amount of force added when the player jumps.
+	[SerializeField] private float jumpHeight = 10f;							// Amount of force added when the player jumps.
 	[SerializeField] private float recoilForce = 50f;                           // Amount of force added when the player gets hurt.
 	[Range(0, 1)] 
 	[SerializeField] private float crouchSpeed = .36f;							// Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -16,26 +16,27 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private Transform groundCheck;                             // A position marking where to check if the player is grounded.
 	[SerializeField] private Transform ceilingCheck;                            // A position marking where to check for ceilings
 	[SerializeField] private Collider2D crouchDisableCollider;                  // A collider that will be disabled when crouching
-	[SerializeField] public float gravityScale = 1f;							//Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D). Also the value the player's rigidbody2D.gravityScale is set to.
-	[SerializeField] public float fallGravityScale = 2f;							
+	[SerializeField] private float gravityScale = 1f;							// Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D). Also the value the player's rigidbody2D.gravityScale is set to.
+	[SerializeField] private float fallGravityScale = 2f;						// rigidbody2D's gravity scale while falling						
+	[SerializeField] private float jumpCancelRate = 100f;
 	
 	[Range(0f, 1f)] 
 	[SerializeField] private float groundedRadius = .5f;						// Radius of the overlap circle to determine if grounded
 	[Range(0f, 1f)]
 	[SerializeField] private float ceilingRadius = .5f;							// Radius of the overlap circle to determine if the player can stand up
-	public bool grounded;														// Whether or not the player is grounded.
+	private bool grounded;														// Whether or not the player is grounded.
+	
 	public Rigidbody2D playerRB { get; private set; }	
 	private bool facingRight = true;											// For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 scale;
 	private Vector2 lookDir;
 
-	[System.Serializable]
+	[Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
 	[Space]
 	[Header("Events")]
 	public BoolEvent OnLandEvent;
-
 	public bool isJumping { get; set; } = false;
 	public bool isAirborne { get; set; } = false;
 	
@@ -70,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
 		grounded = false;
 
 		// The player is grounded if a circleCast to the groundCheck position hits anything designated as ground
-		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
@@ -106,10 +106,26 @@ public class PlayerMovement : MonoBehaviour
 		Gizmos.DrawWireSphere(ceilingCheck.position, ceilingRadius);
 	}
 	#endregion
-    
+
+	public void SetJumpForce()
+	{
+		jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * playerRB.gravityScale));
+	}
+
+	public void SetVelocity()
+	{
+		playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
+	}
+	
 	public void SetGravityScale(float gScale)
 	{
 		playerRB.gravityScale = gScale;  
+	}
+
+	// Adds a downward force to make the fall after jump feels faster
+	public void AddCancelJumpForce()
+	{
+		playerRB.AddForce(Vector2.down * jumpCancelRate);
 	}
 	
 	public void Move(float move, bool crouch, bool jump)
@@ -177,6 +193,16 @@ public class PlayerMovement : MonoBehaviour
 			//playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 		}
 	}
+
+	public void hurtPlayer()
+    {
+		scale = transform.localScale;
+		
+		if (scale.x == 1)
+			playerRB.AddForce(lookDir * recoilForce, ForceMode2D.Impulse);
+		else
+			playerRB.AddForce(-lookDir * recoilForce, ForceMode2D.Impulse);
+	}
 	
 	private void flipPlayer()
 	{
@@ -187,15 +213,5 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 localScale = transform.localScale;
 		localScale.x *= -1;
 		transform.localScale = localScale;
-	}
-
-	public void hurtPlayer()
-    {
-		scale = transform.localScale;
-		
-		if (scale.x == 1)
-			playerRB.AddForce(lookDir * recoilForce, ForceMode2D.Impulse);
-		else
-			playerRB.AddForce(-lookDir * recoilForce, ForceMode2D.Impulse);
 	}
 }

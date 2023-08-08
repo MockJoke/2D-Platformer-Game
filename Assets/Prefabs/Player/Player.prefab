@@ -236,11 +236,10 @@ MonoBehaviour:
   gameOverController: {fileID: 0}
   playerAnimator: {fileID: 7619159361956039937}
   runSpeed: 40
-  camFollowTarget: {fileID: 0}
+  camFollowTarget: {fileID: 4717984931702428652}
   lookAheadAmount: 4
   lookAheadSpeed: 3
   buttonPressWindow: 0.5
-  jumpCancelRate: 150
 --- !u!114 &3366269904381251414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 10
   jumpHeight: 1
-  recoilForce: 50
+  recoilForce: 3.5
   crouchSpeed: 0.36
   movementSmoothing: 0.05
   airControl: 0
@@ -267,8 +266,9 @@ MonoBehaviour:
   crouchDisableCollider: {fileID: 0}
   gravityScale: 4
   fallGravityScale: 6
-  groundedRadius: 0.25
-  ceilingRadius: 0.25
+  jumpCancelRate: 150
+  groundedRadius: 0.1
+  ceilingRadius: 0.1
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -762,7 +762,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3891990121052700178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
