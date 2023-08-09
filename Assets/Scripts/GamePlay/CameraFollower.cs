@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
@@ -21,7 +19,7 @@ public class CameraFollower : MonoBehaviour
 
     void Follow()
     {
-        Vector3 CameraPos = new Vector3(target.position.x + offset.x, transform.position.y, transform.position.z);
+        Vector3 CameraPos = new Vector3(target.position.x + offset.x, target.position.y, transform.position.z);
         transform.position = CameraPos;
     }
 }
