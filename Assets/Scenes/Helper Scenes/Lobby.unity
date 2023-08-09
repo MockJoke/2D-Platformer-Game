@@ -868,7 +868,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a1037b24fe6db478b6a7a929b27eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelBtn: {fileID: 1238943363}
   levelName: Level1
+--- !u!114 &1238943363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6562020212865212624, guid: 6bef449509cc9d14d918c689cf19bbb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1238943355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586274635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1349915470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1016,7 +1029,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a1037b24fe6db478b6a7a929b27eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelBtn: {fileID: 1349915478}
   levelName: Level4
+--- !u!114 &1349915478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6562020212865212624, guid: 6bef449509cc9d14d918c689cf19bbb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1349915470}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864892013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1597585295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1256,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a1037b24fe6db478b6a7a929b27eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelBtn: {fileID: 1648138831}
   levelName: Level2
+--- !u!114 &1648138831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6562020212865212624, guid: 6bef449509cc9d14d918c689cf19bbb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1648138823}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903847682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1699375653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1569,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a1037b24fe6db478b6a7a929b27eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelBtn: {fileID: 1774302050}
   levelName: Level3
+--- !u!114 &1774302050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6562020212865212624, guid: 6bef449509cc9d14d918c689cf19bbb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1774302042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612307836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884250148
 GameObject:
   m_ObjectHideFlags: 0
