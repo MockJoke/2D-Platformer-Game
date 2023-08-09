@@ -38,13 +38,13 @@ public class LevelCompleteController : MonoBehaviour
 
     public void onCloseBtnClick()
     {
-        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+        //SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         gameObject.SetActive(false);
     }
 
     public void onNextLevelBtnClick()
     {
-        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+        //SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         LevelManager.Instance.MarkLevelComplete();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

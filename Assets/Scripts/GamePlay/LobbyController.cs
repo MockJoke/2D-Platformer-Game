@@ -6,12 +6,11 @@ using UnityEngine.UI;
 
 public class LobbyController : MonoBehaviour
 {
+    [SerializeField] private GameObject MainMenuButtonsObj; 
+    [SerializeField] private GameObject LevelMenuButtonsObj; 
 
-    [SerializeField] private GameObject LevelMenu;
-    [SerializeField] private GameObject MainMenu; 
-
-    public Button StartBtn;
-    public Button ExitBtn;
+    [SerializeField] private Button StartBtn;
+    [SerializeField] private Button ExitBtn;
 
     private void Awake()
     {
@@ -19,14 +18,14 @@ public class LobbyController : MonoBehaviour
         ExitBtn.onClick.AddListener(onExitBtnClick); 
     }
 
-    public void onStartBtnClick()
+    private void onStartBtnClick()
     {
         SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
-        LevelMenu.SetActive(true);
-        MainMenu.SetActive(false);        
+        LevelMenuButtonsObj.SetActive(true);
+        MainMenuButtonsObj.SetActive(false);        
     }
 
-    public void onExitBtnClick()
+    private void onExitBtnClick()
     {
         SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         Application.Quit();       

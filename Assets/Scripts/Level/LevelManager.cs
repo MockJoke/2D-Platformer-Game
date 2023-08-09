@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         /* if somehow a copy of it is created then we're destroying it */
