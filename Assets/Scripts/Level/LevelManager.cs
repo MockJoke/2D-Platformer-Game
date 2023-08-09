@@ -4,33 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
-    // singleton - to keep only one instance of it all over the game 
-    private static LevelManager instance;
-
-    /* to only read the value of instance */ 
-    public static LevelManager Instance { get { return instance; } }
-
-    public string[] Levels; 
-
-    private void Awake()
-    {
-        /* the very first time this game obj comes into existence, it's instance will be null so setting its value to the 
-         * correct obj & that shouldn't be destroyed because this LevelManager is going to be consistent throughout the 
-         entire game */
-        if (instance == null)
-        {
-            instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-
-        /* if somehow a copy of it is created then we're destroying it */
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public string[] Levels;
 
     private void Start()
     {
@@ -56,6 +32,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
     public LevelStatus GetLevelStatus(string level)
     {
         LevelStatus levelStatus = (LevelStatus)PlayerPrefs.GetInt(level, 0);

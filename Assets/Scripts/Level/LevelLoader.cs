@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Button))]
 public class LevelLoader : MonoBehaviour
 {
-    private Button levelBtn;
-    public string levelName;
+    [SerializeField] private Button levelBtn;
+    [SerializeField] private string levelName;
 
     private void Awake()
     {
-        levelBtn = GetComponent<Button>();
+        if (levelBtn == null)
+            levelBtn = GetComponent<Button>();
+        
         levelBtn.onClick.AddListener(onLevelBtnClick); 
     }
 

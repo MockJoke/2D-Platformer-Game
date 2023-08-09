@@ -3,12 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    private static SoundManager instance;
-
-    public static SoundManager Instance { get { return instance; } }
-
     public bool IsMute = false;
     public float Volume = 1f;
 
@@ -16,19 +12,6 @@ public class SoundManager : MonoBehaviour
     public AudioSource soundMusic;
 
     public SoundType[] sounds;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
