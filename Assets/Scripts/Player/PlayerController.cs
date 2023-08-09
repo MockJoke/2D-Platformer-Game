@@ -133,7 +133,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool(isHurtStringHash, true);
         StartCoroutine(TimeDelayForHurting()); 
     }
-    #endregion
     
     public void OnLanding(bool isGrounded)
     {
@@ -146,6 +145,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool(isCrouchingStringHash, IsCrouching);
         crouchAnimTrigger();
     }
+    #endregion
     
     public void DamagePlayer()
     {
@@ -159,6 +159,17 @@ public class PlayerController : MonoBehaviour
 
         deathController.PlayerDied(); 
         gameOverController.GameOver();  
+    }
+
+    public bool HasKeys()
+    {
+        return scoreController.HasAllKeys();
+    }
+    
+    public void OnLevelComplete()
+    {
+        LevelManager.Instance.MarkLevelComplete();
+        LevelManager.Instance.GoToNextLevel();
     }
 
     public void PickUpKey()

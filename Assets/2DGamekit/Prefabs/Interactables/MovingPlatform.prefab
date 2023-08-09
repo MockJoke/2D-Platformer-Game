@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4105215491560082}
   - component: {fileID: 108568854560931726}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Point light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4679539377222890}
   - component: {fileID: 212608438086071144}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: MovingPlatform_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4858706423132868}
   - component: {fileID: 198413958005838446}
   - component: {fileID: 199902335417895548}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: RockChunks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5015,7 +5015,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4575080517692320}
   - component: {fileID: 61455244285419906}
-  m_Layer: 8
+  - component: {fileID: 975456112543939180}
+  - component: {fileID: 6297629462560351292}
+  m_Layer: 7
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5068,6 +5070,46 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.975, y: 0.775}
   m_EdgeRadius: 0
+--- !u!251 &975456112543939180
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524626685390748}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
+--- !u!50 &6297629462560351292
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524626685390748}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1864519923445066
 GameObject:
   m_ObjectHideFlags: 0
@@ -5078,7 +5120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409648156141264}
   - component: {fileID: 212913017133179036}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: MovingPlatform_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5162,7 +5204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4053197247714844}
   - component: {fileID: 212062337697364760}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: MovingPlatform_Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

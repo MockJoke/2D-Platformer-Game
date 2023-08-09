@@ -264,8 +264,8 @@ MonoBehaviour:
   groundCheck: {fileID: 21419102}
   ceilingCheck: {fileID: 1459077827}
   crouchDisableCollider: {fileID: 0}
-  gravityScale: 4
-  fallGravityScale: 6
+  gravityScale: 5
+  fallGravityScale: 7
   jumpCancelRate: 150
   groundedRadius: 0.1
   ceilingRadius: 0.1

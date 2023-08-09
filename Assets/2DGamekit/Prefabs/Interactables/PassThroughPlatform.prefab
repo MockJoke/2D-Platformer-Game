@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4870216648442348}
   - component: {fileID: 61246164560083888}
-  m_Layer: 8
+  - component: {fileID: 1302723041221401238}
+  m_Layer: 7
   m_Name: PassThroughPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4782418792258814}
   - {fileID: 4358018472546934}
@@ -61,6 +63,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9747658, y: 0.6349697}
   m_EdgeRadius: 0
+--- !u!251 &1302723041221401238
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141936588996338}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 170
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1647796455069718
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4472275968314736}
   - component: {fileID: 212861009403169140}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PassThroughPlatform_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,6 +109,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.46800017, y: 0.049999952, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4870216648442348}
   m_RootOrder: 2
@@ -154,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4782418792258814}
   - component: {fileID: 212543211639935964}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PassThroughPlatform_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +193,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.53, y: 0.03399992, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4870216648442348}
   m_RootOrder: 0
@@ -237,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358018472546934}
   - component: {fileID: 212499860403568012}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PassThroughPlatform_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +277,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.53, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4870216648442348}
   m_RootOrder: 1
@@ -320,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475174354386718}
   - component: {fileID: 212961996014695844}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PassThroughPlatform_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,6 +361,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.4610002, y: 0.034999967, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4870216648442348}
   m_RootOrder: 3

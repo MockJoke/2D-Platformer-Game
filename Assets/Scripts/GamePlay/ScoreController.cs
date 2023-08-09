@@ -11,7 +11,7 @@ public class ScoreController : MonoBehaviour
     private LevelLoader levelLoader;
     private LevelManager levelManager; 
 
-    private int keysCount = 0; 
+    private int keysCount = 0;
 
     private void Awake()
     {
@@ -46,5 +46,10 @@ public class ScoreController : MonoBehaviour
                 keys[keysCount].gameObject.SetActive(false);
             }
         }
+    }
+
+    public bool HasAllKeys()
+    {
+        return keysCount >= keys.Length;
     }
 }
