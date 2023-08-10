@@ -36,13 +36,14 @@ public class PauseManager : MonoBehaviour
     
     private void onQuitBtnClick()
     {
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         ToggleObj(false);
         Application.Quit();
     }
     
     private void onCloseBtnClick()
     {
-        //SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         ToggleObj(false);
     }
 
