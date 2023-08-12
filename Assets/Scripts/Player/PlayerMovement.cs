@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool grounded;														// Whether or not the player is grounded.
 	
 	public Rigidbody2D playerRB { get; private set; }	
-	private bool facingRight = true;											// For determining which way the player is currently facing.
+	public bool IsFacingRight { get; private set; } = true;											// For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 scale;
 	private Vector2 lookDir;
@@ -177,10 +177,10 @@ public class PlayerMovement : MonoBehaviour
 			playerRB.velocity = Vector3.SmoothDamp(rbVelocity, targetVelocity, ref velocity, movementSmoothing);
 
 			// If the input is moving the player right and the player is facing left...
-			if (move > 0 && !facingRight)
+			if (move > 0 && !IsFacingRight)
 				flipPlayer();
 			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move < 0 && facingRight)
+			else if (move < 0 && IsFacingRight)
 				flipPlayer();
 		}
 		
@@ -207,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
 	private void flipPlayer()
 	{
 		// Switch the way the player is labelled as facing.
-		facingRight = !facingRight;
+		IsFacingRight = !IsFacingRight;
 
 		// Multiply the player's x local scale by -1.
 		Vector3 localScale = transform.localScale;

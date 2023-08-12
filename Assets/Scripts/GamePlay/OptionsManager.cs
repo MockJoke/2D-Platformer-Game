@@ -3,6 +3,7 @@ using UnityEngine;
 public class OptionsManager : Singleton<OptionsManager>
 {
     [SerializeField] private GameObject PauseCanvas;
+    [SerializeField] private GameObject LevelCanvas;
     [SerializeField] private GameObject SettingsCanvas;
     [SerializeField] private GameObject AudioCanvas;
     [SerializeField] private GameObject ControlsCanvas;
@@ -20,5 +21,10 @@ public class OptionsManager : Singleton<OptionsManager>
     public void ToggleBG(bool status)
     {
         BG.SetActive(status);
+    }
+
+    public void ToggleLevelCanvas(bool status)
+    {
+        LevelCanvas.SetActive(status);
     }
 }

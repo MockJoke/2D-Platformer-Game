@@ -30,13 +30,15 @@ public class LevelLoader : MonoBehaviour
                 break;
 
             case LevelStatus.Unlocked:
-                SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick); 
+                SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
                 SceneManager.LoadScene(levelName);
+                OptionsManager.Instance.ToggleLevelCanvas(true);
                 break;
 
             case LevelStatus.Completed:
                 SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
                 SceneManager.LoadScene(levelName);
+                OptionsManager.Instance.ToggleLevelCanvas(true);
                 break;
         }
     }

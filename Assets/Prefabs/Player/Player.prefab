@@ -232,8 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 3366269904381251414}
-  scoreController: {fileID: 0}
-  gameOverController: {fileID: 0}
   playerAnimator: {fileID: 7619159361956039937}
   runSpeed: 40
   camFollowTarget: {fileID: 4717984931702428652}
@@ -255,7 +253,7 @@ MonoBehaviour:
   jumpForce: 10
   jumpHeight: 1
   recoilForce: 3.5
-  crouchSpeed: 0.36
+  crouchSpeed: 0.35
   movementSmoothing: 0.05
   airControl: 0
   whatIsGround:

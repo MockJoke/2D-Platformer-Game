@@ -7,26 +7,17 @@ using UnityEngine.SceneManagement;
 //when a player falls off the platform
 public class DeathController : MonoBehaviour
 {
-    private HealthController healthController;
-
-    private void Awake()
+    public void OnDeathFromFall()
     {
-        healthController = FindObjectOfType<HealthController>();
+        SoundManager.Instance.Play(SoundManager.Sounds.PlayerDeath);
+        PlayerDied(true);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PlayerDied(bool fromWater)
     {
-        if (collision.gameObject.GetComponent<PlayerController>() != null)
-        {
-            SoundManager.Instance.Play(SoundManager.Sounds.PlayerDeath);
-        }
-    }
+        GameManager.Instance.healthController.LoseLife(fromWater); 
 
-    public void PlayerDied()
-    {
-        healthController.LoseLife(); 
-
-        Invoke(nameof(ReloadScene), 2f);
+        Invoke(nameof(ReloadScene), 1.5f);
     }
 
     private void ReloadScene()

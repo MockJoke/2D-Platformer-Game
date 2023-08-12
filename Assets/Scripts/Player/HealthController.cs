@@ -1,27 +1,26 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI; 
 
 public class HealthController : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
-
     [SerializeField] private Image[] lives; 
     private int livesCount = 3;
 
-    public void LoseLife()
+    public Action<bool> OnDamage;
+
+    public void LoseLife(bool fromWater)
     {
         livesCount--;
         
         if(livesCount > 0)
         {
-            playerController.DamagePlayer();
+            OnDamage?.Invoke(fromWater);
 
             lives[livesCount].gameObject.SetActive(false);
 
             if (livesCount == 0)
             {
-                playerController.KillPlayer();
-
                 lives[livesCount].gameObject.SetActive(false);
             }
         }

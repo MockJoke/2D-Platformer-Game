@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement playerMovement; 
-    [SerializeField] private ScoreController scoreController;
-    [SerializeField] private GameOverController gameOverController;
+    [SerializeField] private PlayerMovement playerMovement;
     private DeathController deathController;
 
     [SerializeField] private Animator playerAnimator;
@@ -22,6 +20,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform camFollowTarget;
     [SerializeField] private float lookAheadAmount = 0.1f;
     [SerializeField] private float lookAheadSpeed = 0.1f;
+    public float cameraHorizontalFacingOffset;
+    public float cameraHorizontalSpeedOffset;
+    public float cameraVerticalInputOffset;
+    public float maxHorizontalDeltaDampTime;
+    public float maxVerticalDeltaDampTime;
+    public float verticalCameraOffsetDelay;
+    protected float m_CamFollowHorizontalSpeed;
+    protected float m_CamFollowVerticalSpeed;
+    protected float m_VerticalCameraOffsetTimer;
     
     [Header("Input related fields for variable jump")]
     private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
@@ -39,7 +46,11 @@ public class PlayerController : MonoBehaviour
     #region MONOBEHAVIOUR METHODS
     private void Awake()
     {
+        if (playerMovement == null)
+            playerMovement = this.gameObject.GetComponent<PlayerMovement>();
+        
         deathController = FindObjectOfType<DeathController>();
+        GameManager.Instance.healthController.OnDamage += DamagePlayer;
     }
 
     private void Update()
@@ -87,7 +98,14 @@ public class PlayerController : MonoBehaviour
         }
         
         playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
+        //UpdateCameraFollowTargetPosition();
         //playerMovement.isJumping = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance.healthController)
+            GameManager.Instance.healthController.OnDamage -= DamagePlayer;
     }
     #endregion
     
@@ -97,6 +115,44 @@ public class PlayerController : MonoBehaviour
         
         localPosition = new Vector3(Mathf.Lerp(localPosition.x, lookAheadAmount * xVelocity, lookAheadSpeed * Time.deltaTime), localPosition.y, localPosition.z);
         camFollowTarget.localPosition = localPosition;
+    }
+    
+    protected void UpdateCameraFollowTargetPosition()
+    {
+        float newLocalPosX;
+        float newLocalPosY = 0f;
+
+        // float desiredLocalPosX = (playerMovement.IsFacingRight ? -1f : 1f) * cameraHorizontalFacingOffset;
+        // desiredLocalPosX += m_MoveVector.x * cameraHorizontalSpeedOffset;
+        // if (Mathf.Approximately(m_CamFollowHorizontalSpeed, 0f))
+        //     newLocalPosX = desiredLocalPosX;
+        // else
+        //     newLocalPosX = Mathf.Lerp(camFollowTarget.localPosition.x, desiredLocalPosX, m_CamFollowHorizontalSpeed * Time.deltaTime);
+
+        // bool moveVertically = false;
+        // if (!Mathf.Approximately(PlayerInput.Instance.Vertical.Value, 0f))
+        // {
+        //     m_VerticalCameraOffsetTimer += Time.deltaTime;
+        //
+        //     if (m_VerticalCameraOffsetTimer >= verticalCameraOffsetDelay)
+        //         moveVertically = true;
+        // }
+        // else
+        // {
+        //     moveVertically = true;
+        //     m_VerticalCameraOffsetTimer = 0f;
+        // }
+
+        if (playerMovement.isJumping) //(moveVertically)
+        {
+            float desiredLocalPosY = cameraVerticalInputOffset; //PlayerInput.Instance.Vertical.Value * cameraVerticalInputOffset;
+            if (Mathf.Approximately(m_CamFollowVerticalSpeed, 0f))
+                newLocalPosY = desiredLocalPosY;
+            else
+                newLocalPosY = Mathf.MoveTowards(camFollowTarget.localPosition.y, desiredLocalPosY, m_CamFollowVerticalSpeed * Time.deltaTime);
+        }
+
+        camFollowTarget.localPosition = new Vector2(0, newLocalPosY);
     }
     
     #region ANIMATION TRIGGERS
@@ -125,7 +181,7 @@ public class PlayerController : MonoBehaviour
     
     private void deathAnimTrigger()
     {
-        playerAnimator.SetBool(isDyingStringHash, true);
+        playerAnimator.SetTrigger(isDyingStringHash);
     }
 
     private void hurtAnimTrigger()
@@ -146,24 +202,30 @@ public class PlayerController : MonoBehaviour
         crouchAnimTrigger();
     }
     #endregion
-    
-    public void DamagePlayer()
+
+    private void DamagePlayer(bool fromWater = false)
     {
-        playerMovement.hurtPlayer();
-        hurtAnimTrigger();
+        if (!fromWater) 
+            playerMovement.hurtPlayer();
+        
+        if (fromWater)
+            deathAnimTrigger();
+        else 
+            hurtAnimTrigger();
+            
     }
 
     public void KillPlayer()
     {
         deathAnimTrigger();
 
-        deathController.PlayerDied(); 
-        gameOverController.GameOver();  
+        deathController.PlayerDied(false); 
+        GameManager.Instance.gameOverController.GameOver();  
     }
 
     public bool HasKeys()
     {
-        return scoreController.HasAllKeys();
+        return GameManager.Instance.scoreController.HasAllKeys();
     }
     
     public void OnLevelComplete()
@@ -174,7 +236,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpKey()
     {
-        scoreController.AddKey(); 
+        GameManager.Instance.scoreController.AddKey(); 
     }
 
     IEnumerator TimeDelayForHurting()
