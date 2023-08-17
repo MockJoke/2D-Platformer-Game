@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6925245987273508621}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: groundDetector
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -24,8 +24,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3275197758827086381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.24, z: 0}
+  m_LocalPosition: {x: 1, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8241071079027979178}
   m_RootOrder: 0
@@ -43,8 +44,8 @@ GameObject:
   - component: {fileID: 8241071079027979180}
   - component: {fileID: 720796492}
   - component: {fileID: 9173550701677964748}
-  m_Layer: 8
-  m_Name: chomper
+  m_Layer: 9
+  m_Name: Chomper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,6 +61,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.98, y: -1.472, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6925245987273508621}
   m_Father: {fileID: 0}
@@ -145,7 +147,7 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!95 &720796492
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -158,10 +160,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &9173550701677964748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +181,5 @@ MonoBehaviour:
   enemyAnimator: {fileID: 720796492}
   speed: 5
   RayDistance: 1.5
-  ismovingRight: 1
+  isMovingRight: 0
   groundDetection: {fileID: 6925245987273508621}
-  livesController: {fileID: 0}

@@ -9,21 +9,16 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public float RayDistance;
 
-    public bool ismovingRight;
+    public bool isMovingRight;
 
     public Transform groundDetection;
-
-    public HealthController healthController;
-    public PlayerController playerController;
-    public DeathController deathController; 
     
     //when a player collide with an enemy
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
-            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-            healthController.LoseLife(false); 
+            GameManager.Instance.healthController.LoseLife(false); 
 
             SoundManager.Instance.Play(SoundManager.Sounds.ChomperEnemyCollision);
         }
@@ -43,17 +38,16 @@ public class EnemyController : MonoBehaviour
 
         if (!GroundDetector.collider)
         {
-            if (ismovingRight)
+            if (isMovingRight)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
-                ismovingRight = false;
+                isMovingRight = false;
             }
             else
             {
                 transform.eulerAngles = new Vector3(0, 0, 0);
-                ismovingRight = true;
+                isMovingRight = true;
             }
-
         }
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4105215491560082}
   - component: {fileID: 108568854560931726}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: Point light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4679539377222890}
   - component: {fileID: 212608438086071144}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: MovingPlatform_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4858706423132868}
   - component: {fileID: 198413958005838446}
   - component: {fileID: 199902335417895548}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: RockChunks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5017,7 +5017,7 @@ GameObject:
   - component: {fileID: 61455244285419906}
   - component: {fileID: 975456112543939180}
   - component: {fileID: 6297629462560351292}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5120,7 +5120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409648156141264}
   - component: {fileID: 212913017133179036}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: MovingPlatform_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5204,7 +5204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4053197247714844}
   - component: {fileID: 212062337697364760}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: MovingPlatform_Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

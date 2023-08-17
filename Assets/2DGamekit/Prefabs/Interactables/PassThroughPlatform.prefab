@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4870216648442348}
   - component: {fileID: 61246164560083888}
   - component: {fileID: 1302723041221401238}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: PassThroughPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4472275968314736}
   - component: {fileID: 212861009403169140}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: PassThroughPlatform_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4782418792258814}
   - component: {fileID: 212543211639935964}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: PassThroughPlatform_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358018472546934}
   - component: {fileID: 212499860403568012}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: PassThroughPlatform_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475174354386718}
   - component: {fileID: 212961996014695844}
-  m_Layer: 7
+  m_Layer: 31
   m_Name: PassThroughPlatform_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

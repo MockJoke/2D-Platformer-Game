@@ -16,20 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runSpeed = 40f;   
     private float horizontalMove = 0f;
     
-    [Header("Camera Movement")] 
-    [SerializeField] private Transform camFollowTarget;
-    [SerializeField] private float lookAheadAmount = 0.1f;
-    [SerializeField] private float lookAheadSpeed = 0.1f;
-    public float cameraHorizontalFacingOffset;
-    public float cameraHorizontalSpeedOffset;
-    public float cameraVerticalInputOffset;
-    public float maxHorizontalDeltaDampTime;
-    public float maxVerticalDeltaDampTime;
-    public float verticalCameraOffsetDelay;
-    protected float m_CamFollowHorizontalSpeed;
-    protected float m_CamFollowVerticalSpeed;
-    protected float m_VerticalCameraOffsetTimer;
-    
     [Header("Input related fields for variable jump")]
     private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
     [SerializeField] private float buttonPressWindow = 0.5f;            // Threshold amount of time for the button input
@@ -98,7 +84,6 @@ public class PlayerController : MonoBehaviour
         }
         
         playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
-        //UpdateCameraFollowTargetPosition();
         //playerMovement.isJumping = false;
     }
 
@@ -108,52 +93,6 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.healthController.OnDamage -= DamagePlayer;
     }
     #endregion
-    
-    public void MoveCameraTarget(float xVelocity)
-    {
-        var localPosition = camFollowTarget.localPosition;
-        
-        localPosition = new Vector3(Mathf.Lerp(localPosition.x, lookAheadAmount * xVelocity, lookAheadSpeed * Time.deltaTime), localPosition.y, localPosition.z);
-        camFollowTarget.localPosition = localPosition;
-    }
-    
-    protected void UpdateCameraFollowTargetPosition()
-    {
-        float newLocalPosX;
-        float newLocalPosY = 0f;
-
-        // float desiredLocalPosX = (playerMovement.IsFacingRight ? -1f : 1f) * cameraHorizontalFacingOffset;
-        // desiredLocalPosX += m_MoveVector.x * cameraHorizontalSpeedOffset;
-        // if (Mathf.Approximately(m_CamFollowHorizontalSpeed, 0f))
-        //     newLocalPosX = desiredLocalPosX;
-        // else
-        //     newLocalPosX = Mathf.Lerp(camFollowTarget.localPosition.x, desiredLocalPosX, m_CamFollowHorizontalSpeed * Time.deltaTime);
-
-        // bool moveVertically = false;
-        // if (!Mathf.Approximately(PlayerInput.Instance.Vertical.Value, 0f))
-        // {
-        //     m_VerticalCameraOffsetTimer += Time.deltaTime;
-        //
-        //     if (m_VerticalCameraOffsetTimer >= verticalCameraOffsetDelay)
-        //         moveVertically = true;
-        // }
-        // else
-        // {
-        //     moveVertically = true;
-        //     m_VerticalCameraOffsetTimer = 0f;
-        // }
-
-        if (playerMovement.isJumping) //(moveVertically)
-        {
-            float desiredLocalPosY = cameraVerticalInputOffset; //PlayerInput.Instance.Vertical.Value * cameraVerticalInputOffset;
-            if (Mathf.Approximately(m_CamFollowVerticalSpeed, 0f))
-                newLocalPosY = desiredLocalPosY;
-            else
-                newLocalPosY = Mathf.MoveTowards(camFollowTarget.localPosition.y, desiredLocalPosY, m_CamFollowVerticalSpeed * Time.deltaTime);
-        }
-
-        camFollowTarget.localPosition = new Vector2(0, newLocalPosY);
-    }
     
     #region ANIMATION TRIGGERS
     private void runAnim()
