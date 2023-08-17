@@ -25,9 +25,9 @@ public class PlayerMovement : MonoBehaviour
 	[Range(0f, 1f)]
 	[SerializeField] private float ceilingRadius = .5f;							// Radius of the overlap circle to determine if the player can stand up
 	private bool grounded;														// Whether or not the player is grounded.
-	
-	public Rigidbody2D playerRB { get; private set; }	
-	public bool IsFacingRight { get; private set; } = true;											// For determining which way the player is currently facing.
+
+	public Rigidbody2D playerRB;
+	private bool IsFacingRight { get; set; } = true;							// For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 scale;
 	private Vector2 lookDir;

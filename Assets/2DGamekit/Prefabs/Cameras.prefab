@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9071085029307310288}
   - component: {fileID: 9071085029307310295}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: PostProcessing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 9071085029431542444}
   - component: {fileID: 9071085029431542446}
   - component: {fileID: 9071085029431542445}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 46
+  field of view: 45
   orthographic: 0
   orthographic size: 5.5
   m_Depth: 0
@@ -139,7 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothFactor: 3
+  cam: {fileID: 9071085029431542444}
+  minBounds: {x: 0, y: 0, z: 0}
+  maxBounds: {x: 0, y: 0, z: 0}
+  smoothTime: 0.25
 --- !u!114 &9071085029431542445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +173,7 @@ MonoBehaviour:
     fastMode: 0
     keepAlpha: 0
   fog:
-    enabled: 1
+    enabled: 0
     excludeSkybox: 1
   debugLayer:
     lightMeter:
