@@ -31,7 +31,7 @@ public class CameraFollower : MonoBehaviour
         
         // Clamp camera position within specified bounds
         CameraPos.x = Mathf.Clamp(CameraPos.x, minBounds.x, maxBounds.x);
-        CameraPos.y = Mathf.Clamp(CameraPos.y, minBounds.y, maxBounds.y); 
+        CameraPos.y = Mathf.Clamp(CameraPos.y, minBounds.y, maxBounds.y);
         
         Vector3 currVelocity = rb.velocity;
         transform.position = Vector3.SmoothDamp(transform.position, CameraPos, ref currVelocity, smoothTime);
