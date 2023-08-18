@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - boundary
   - deathTriggrers
+  - Enemy
   layers:
   - Default
   - TransparentFX
