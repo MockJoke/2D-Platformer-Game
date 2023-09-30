@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    private static readonly int AttackAnimString = Animator.StringToHash("Attack");
-    
     public void MeleeAttack()
     {
+        if (isDying)
+            return;
+        
         canMove = false;
         
         animator.SetTrigger(AttackAnimString);

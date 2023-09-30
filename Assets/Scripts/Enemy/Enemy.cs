@@ -11,16 +11,18 @@ public class Enemy : MonoBehaviour
     
     [SerializeField] private float speed = 5f;
     [SerializeField] private Transform[] patrolSpots;
-    [SerializeField] public float attackAgainDelay = 2.5f;
+    [SerializeField] protected float attackAgainDelay = 3.5f;
     private int currPatrolSpotIndex = 0;
     
     protected bool canMove = true;
+    protected bool isDying = false;
     private bool isMovingRight;
 
     private readonly bool isHit = false;
     private static readonly int deathAnimString = Animator.StringToHash("Die");
     private static readonly int hitAnimString = Animator.StringToHash("Hit");
-
+    protected static readonly int AttackAnimString = Animator.StringToHash("Attack");
+    
     protected void Awake()
     {
         if (boxCollider == null)
@@ -29,7 +31,7 @@ public class Enemy : MonoBehaviour
 
     protected void Start()
     {
-        damager.DisableDamage();
+        isDying = false;
         damageable.SetHealth(damageable.startingHealth);
     }
 
@@ -81,7 +83,12 @@ public class Enemy : MonoBehaviour
 
     public void OnDeath()
     {
-        StartCoroutine(DestroyEnemy());
+        isDying = true;
+        boxCollider.enabled = false;
+        canMove = false;
+        animator.ResetTrigger(hitAnimString);
+        animator.ResetTrigger(AttackAnimString);
+        animator.SetTrigger(deathAnimString);
     }
 
     public IEnumerator WaitToAttack(float time)
@@ -92,15 +99,8 @@ public class Enemy : MonoBehaviour
         canMove = true;
     }
     
-    IEnumerator DestroyEnemy()
+    public void DestroyEnemy()
     {
-        boxCollider.enabled = false;
-        
-        animator.SetBool(deathAnimString, true);
-        canMove = false;
-        
-        yield return new WaitForSeconds(0.25f);
-        
         Destroy(gameObject);
     }
 }
