@@ -9,7 +9,7 @@ public class DoorItem : MonoBehaviour
     
     private static readonly int OpenDoor = Animator.StringToHash("OpenDoor");
 
-    private void OnTriggerEnter2D(Collider2D obj)
+    private void OnCollisionEnter2D(Collision2D obj)
     {
         PlayerController playerController = obj.gameObject.GetComponent<PlayerController>();
        
