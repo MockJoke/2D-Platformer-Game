@@ -1,16 +1,13 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement; 
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement playerMovement;
-    private DeathController deathController;
-
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Damager meleeDamager;
+    [SerializeField] private Damageable damageable;
 
     [Header("Movement Controls")]
     [SerializeField] private float runSpeed = 40f;   
@@ -20,23 +17,36 @@ public class PlayerController : MonoBehaviour
     private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
     [SerializeField] private float buttonPressWindow = 0.5f;            // Threshold amount of time for the button input
     private bool jumpCancelled = false;                                 // Bool to keep track of the jump input for cancellation
+
+    private DeathController deathController;
+    private Vector3 initialPos;
+
+    private Coroutine hurtFlickerCoroutine = null;
+    [SerializeField] private float flickeringDuration = 0.1f;
     
     // Animator hash strings
-    private static readonly int isJumpingStringHash = Animator.StringToHash("isJumping");
-    private static readonly int xSpeedStringHash = Animator.StringToHash("HorizontalSpeed");
-    private static readonly int isDyingStringHash = Animator.StringToHash("isDying");
-    private static readonly int isHurtStringHash = Animator.StringToHash("isHurt");
-    private static readonly int isCrouchingStringHash = Animator.StringToHash("isCrouching");
-    private static readonly int ySpeedStringHash = Animator.StringToHash("VerticalSpeed");
+    private static readonly int isJumpingAnimString = Animator.StringToHash("isJumping");
+    private static readonly int isDyingAnimString = Animator.StringToHash("isDying");
+    private static readonly int isHurtAnimString = Animator.StringToHash("isHurt");
+    private static readonly int isCrouchingAnimString = Animator.StringToHash("isCrouching");
+    private static readonly int attackAnimString = Animator.StringToHash("MeleeAttack");
+    private static readonly int xSpeedAnimString = Animator.StringToHash("HorizontalSpeed");
+    private static readonly int ySpeedAnimString = Animator.StringToHash("VerticalSpeed");
 
-    #region MONOBEHAVIOUR METHODS
+    #region Monobehaviour Methods
     private void Awake()
     {
         if (playerMovement == null)
             playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         
         deathController = FindObjectOfType<DeathController>();
-        GameManager.Instance.healthController.OnDamage += DamagePlayer;
+
+        initialPos = transform.position;
+    }
+
+    private void Start()
+    {
+        meleeDamager.DisableDamage();
     }
 
     private void Update()
@@ -52,6 +62,11 @@ public class PlayerController : MonoBehaviour
             
             playerMovement.SetJumpForce();
             playerMovement.isAirborne = true;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.K) && !playerMovement.isAirborne && !playerMovement.isCrouching)
+        {
+            EnableMeleeAttack();
         }
 
         if (playerMovement.isJumping)
@@ -86,20 +101,14 @@ public class PlayerController : MonoBehaviour
         playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
         //playerMovement.isJumping = false;
     }
-
-    private void OnDestroy()
-    {
-        if (GameManager.Instance.healthController)
-            GameManager.Instance.healthController.OnDamage -= DamagePlayer;
-    }
     #endregion
     
-    #region ANIMATION TRIGGERS
+    #region Animation Triggers
     private void runAnim()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        playerAnimator.SetFloat(xSpeedStringHash, Mathf.Abs(horizontalMove));
-        playerAnimator.SetFloat(ySpeedStringHash, playerMovement.playerRB.velocity.y);
+        playerAnimator.SetFloat(xSpeedAnimString, Mathf.Abs(horizontalMove));
+        playerAnimator.SetFloat(ySpeedAnimString, playerMovement.playerRB.velocity.y);
     }
 
     private void jumpAnimTrigger(bool status, bool setAnimationTrigger = true)
@@ -107,7 +116,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.isJumping = status;
         
         if (setAnimationTrigger)
-            playerAnimator.SetBool(isJumpingStringHash, status);
+            playerAnimator.SetBool(isJumpingAnimString, status);
     }
 
     private void crouchAnimTrigger()
@@ -117,49 +126,107 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetButtonUp("Crouch"))
             playerMovement.isCrouching = false;
     }
+
+    private void attackAnimTrigger()
+    {
+        playerAnimator.SetTrigger(attackAnimString);
+    }
     
     private void deathAnimTrigger()
     {
-        playerAnimator.SetTrigger(isDyingStringHash);
+        playerAnimator.SetTrigger(isDyingAnimString);
     }
 
     private void hurtAnimTrigger()
     {
-        playerAnimator.SetBool(isHurtStringHash, true);
-        StartCoroutine(TimeDelayForHurting()); 
+        playerAnimator.SetTrigger(isHurtAnimString);
     }
     
     public void OnLanding(bool isGrounded)
     {
         playerMovement.isAirborne = !isGrounded;
-        //playerAnimator.SetBool(isJumpingStringHash, !isGrounded);
     }
 
     public void OnCrouching(bool IsCrouching)
     {
-        playerAnimator.SetBool(isCrouchingStringHash, IsCrouching);
+        playerAnimator.SetBool(isCrouchingAnimString, IsCrouching);
         crouchAnimTrigger();
     }
     #endregion
 
-    private void DamagePlayer(bool fromWater = false)
+    public void Respawn(bool resetHealth)
     {
-        if (!fromWater) 
-            playerMovement.hurtPlayer();
+        transform.position = initialPos;
         
-        if (fromWater)
-            deathAnimTrigger();
-        else 
-            hurtAnimTrigger();
-            
+        if (resetHealth)
+            damageable.SetHealth(damageable.startingHealth);
     }
 
+    private void EnableMeleeAttack()
+    {
+        meleeDamager.EnableDamage();
+        damageable.EnableInvulnerability();
+        meleeDamager.disableDamageAfterHit = true;
+        attackAnimTrigger();
+
+        StartCoroutine(disableMeleeAttack());
+    }
+
+    private IEnumerator disableMeleeAttack()
+    {
+        yield return new WaitForSeconds(1.5f);
+        meleeDamager.DisableDamage();
+        damageable.DisableInvulnerability();
+    }
+    
+    public void DamagePlayer()
+    {
+        hurtAnimTrigger();
+        playerMovement.PushPlayerOnHurting();
+        StartFlickering();
+        damageable.EnableInvulnerability();
+        GameManager.Instance.healthController.LoseLife();
+        StartCoroutine(TimeDelayForHurtingAgain());
+    }
+    
+    private IEnumerator TimeDelayForHurtingAgain()
+    {
+        yield return new WaitForSeconds(2.5f);
+        damageable.DisableInvulnerability();
+        StopFlickering();
+    }
+    
+    private void StartFlickering()
+    {
+        hurtFlickerCoroutine = StartCoroutine(Flicker());
+    }
+    
+    private IEnumerator Flicker()
+    {
+        float timer = 0f;
+
+        while (timer < damageable.invulnerabilityDuration)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+            yield return new WaitForSeconds(flickeringDuration);
+            timer += flickeringDuration;
+        }
+
+        spriteRenderer.enabled = true;
+    }
+    
+    private void StopFlickering()
+    {
+        StopCoroutine(hurtFlickerCoroutine);
+        spriteRenderer.enabled = true;
+    }
+    
     public void KillPlayer()
     {
         deathAnimTrigger();
 
-        deathController.PlayerDied(false); 
-        GameManager.Instance.gameOverController.GameOver();  
+        deathController.PlayerDied();
+        GameManager.Instance.gameOverController.GameOver();
     }
 
     public bool HasKeys()
@@ -177,41 +244,35 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.Instance.scoreController.AddKey(); 
     }
-
-    IEnumerator TimeDelayForHurting()
-    {
-        yield return new WaitForSeconds(0.5f);
-        playerAnimator.SetBool(isHurtStringHash, false);
-    }
     
-    #region INPUT SYSTEM ACTION METHODS
-    // These are called from PlayerInput
-    
-    // When a joystick or arrow keys has been pushed. It stores the input Vector as a Vector3 to then be used by the smoothing function.
-    public void OnMovement(InputAction.CallbackContext value)
-    {
-        
-    }
-
-    public void OnJump(InputAction.CallbackContext value)
-    {
-        // if (value.started)
-        // {
-        //     jumpAnimTrigger();
-        // }
-    }
-
-    public void OnCrouch(InputAction.CallbackContext value)
-    {
-        if (value.started)
-        {
-            crouchAnimTrigger();
-        }
-    }
-
-    public void OnAttack(InputAction.CallbackContext value)
-    {
-        
-    }
-    #endregion
+    // #region INPUT SYSTEM ACTION METHODS
+    // // These are called from PlayerInput
+    //
+    // // When a joystick or arrow keys has been pushed. It stores the input Vector as a Vector3 to then be used by the smoothing function.
+    // public void OnMovement(InputAction.CallbackContext value)
+    // {
+    //     
+    // }
+    //
+    // public void OnJump(InputAction.CallbackContext value)
+    // {
+    //     // if (value.started)
+    //     // {
+    //     //     jumpAnimTrigger();
+    //     // }
+    // }
+    //
+    // public void OnCrouch(InputAction.CallbackContext value)
+    // {
+    //     if (value.started)
+    //     {
+    //         crouchAnimTrigger();
+    //     }
+    // }
+    //
+    // public void OnAttack(InputAction.CallbackContext value)
+    // {
+    //     
+    // }
+    // #endregion
 }
