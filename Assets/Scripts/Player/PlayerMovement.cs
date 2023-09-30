@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool grounded;														// Whether or not the player is grounded.
 
 	public Rigidbody2D playerRB;
-	private bool IsFacingRight { get; set; } = true;							// For determining which way the player is currently facing.
+	private bool isFacingRight { get; set; } = true;							// For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 	private Vector3 scale;
 	private Vector2 lookDir;
@@ -43,12 +43,16 @@ public class PlayerMovement : MonoBehaviour
 	public BoolEvent onCrouchEvent;
 	public bool isCrouching { get; set; } = false;
 	private bool wasCrouching = false;
+
+	private Camera cameraMain;
 	
-	#region MONOBEHAVIOUR METHODS
+	#region Monobehaviour Methods
 	private void Awake()
 	{
 		playerRB = GetComponent<Rigidbody2D>();
-
+		
+		cameraMain = Camera.main;
+		
 		if (OnLandEvent == null)
 			OnLandEvent = new BoolEvent();
 
@@ -87,8 +91,8 @@ public class PlayerMovement : MonoBehaviour
 		
         OnLandEvent.Invoke(grounded);
 		
-		if (Camera.main != null) 
-			lookDir = Camera.main.ScreenToWorldPoint(transform.position);
+		if (cameraMain != null) 
+			lookDir = cameraMain.ScreenToWorldPoint(transform.position);
 	}
 	
 	private void OnDrawGizmos()
@@ -177,37 +181,37 @@ public class PlayerMovement : MonoBehaviour
 			playerRB.velocity = Vector3.SmoothDamp(rbVelocity, targetVelocity, ref velocity, movementSmoothing);
 
 			// If the input is moving the player right and the player is facing left...
-			if (move > 0 && !IsFacingRight)
+			if (move > 0 && !isFacingRight)
 				flipPlayer();
 			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move < 0 && IsFacingRight)
+			else if (move < 0 && isFacingRight)
 				flipPlayer();
 		}
 		
 		// If the player should jump...
 		if (grounded && jump)
 		{
-			// Add a vertical force to the player.
 			grounded = false;
+			// Add a vertical force to the player.
 			//playerRB.AddForce(new Vector2(0f, jumpForce));
 			//playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 		}
 	}
 
-	public void hurtPlayer()
+	public void PushPlayerOnHurting()
     {
 		scale = transform.localScale;
 		
-		if (scale.x == 1)
-			playerRB.AddForce(lookDir * recoilForce, ForceMode2D.Impulse);
+		if (scale.x > 0)
+			playerRB.AddForce(Vector3.left * recoilForce, ForceMode2D.Impulse);
 		else
-			playerRB.AddForce(-lookDir * recoilForce, ForceMode2D.Impulse);
+			playerRB.AddForce(Vector3.right * recoilForce, ForceMode2D.Impulse);
 	}
 	
 	private void flipPlayer()
 	{
 		// Switch the way the player is labelled as facing.
-		IsFacingRight = !IsFacingRight;
+		isFacingRight = !isFacingRight;
 
 		// Multiply the player's x local scale by -1.
 		Vector3 localScale = transform.localScale;
