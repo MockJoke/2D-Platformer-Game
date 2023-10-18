@@ -9,19 +9,19 @@ EditorBuildSettings:
     path: Assets/Scenes/Helper Scenes/Lobby.unity
     guid: 3a46aa8073dff7744a2d6a6be0f747bf
   - enabled: 1
-    path: Assets/Scenes/UpdatedLevels/Level1.unity
+    path: Assets/Scenes/Levels/Level1.unity
     guid: 417fba669e9404645a7253ff78c2b9d7
   - enabled: 1
-    path: Assets/Scenes/UpdatedLevels/Level2.unity
+    path: Assets/Scenes/Levels/Level2.unity
     guid: 960b12f881940d84983273421bebc695
   - enabled: 1
-    path: Assets/Scenes/UpdatedLevels/Level3.unity
+    path: Assets/Scenes/Levels/Level3.unity
     guid: 5436c67e9267f17458b31fcdc20cd20a
   - enabled: 1
-    path: Assets/Scenes/UpdatedLevels/Level4.unity
+    path: Assets/Scenes/Levels/Level4.unity
     guid: 4b4b0e246fc7dbb4295a38fd03241362
   - enabled: 1
-    path: Assets/Scenes/UpdatedLevels/Level5.unity
+    path: Assets/Scenes/Levels/Level5.unity
     guid: 5b0c2d9ddd151ba489db19a4fb634327
   - enabled: 1
     path: Assets/Scenes/Helper Scenes/Settings.unity
