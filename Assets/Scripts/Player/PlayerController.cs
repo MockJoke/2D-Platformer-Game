@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
     {
         hurtAnimTrigger();
         playerMovement.PushPlayerOnHurting();
-        StartFlickering();
+        // StartFlickering();
         damageable.EnableInvulnerability();
         GameManager.Instance.healthController.LoseLife();
         StartCoroutine(TimeDelayForHurtingAgain());
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
         StopFlickering();
     }
     
-    private void StartFlickering()
+    public void StartFlickering()
     {
         hurtFlickerCoroutine = StartCoroutine(Flicker());
     }
@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.scoreController.AddKey(); 
     }
     
-    // #region INPUT SYSTEM ACTION METHODS
+    #region INPUT SYSTEM ACTION METHODS
     // // These are called from PlayerInput
     //
     // // When a joystick or arrow keys has been pushed. It stores the input Vector as a Vector3 to then be used by the smoothing function.
@@ -274,5 +274,5 @@ public class PlayerController : MonoBehaviour
     // {
     //     
     // }
-    // #endregion
+    #endregion
 }
