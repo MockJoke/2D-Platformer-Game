@@ -4,6 +4,7 @@ public class OptionsManager : Singleton<OptionsManager>
 {
     [SerializeField] private GameObject PauseCanvas;
     [SerializeField] private GameObject LevelCanvas;
+    [SerializeField] private GameObject GameOverCanvas;
     [SerializeField] private GameObject SettingsCanvas;
     [SerializeField] private GameObject AudioCanvas;
     [SerializeField] private GameObject ControlsCanvas;

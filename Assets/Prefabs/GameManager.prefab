@@ -433,8 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695c14f4232ad3c40b9e1f79106b21a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreController: {fileID: 3481346145101642633}
-  healthController: {fileID: 5285506780712434473}
+  scoreController: {fileID: 0}
+  healthController: {fileID: 0}
   gameOverController: {fileID: 5388356430798443722}
 --- !u!1001 &1636775892310329544
 PrefabInstance:
@@ -509,6 +509,10 @@ PrefabInstance:
     - target: {fileID: 1429896205635384, guid: 28fdaedf686cb394ba208418f1942254, type: 3}
       propertyPath: m_Name
       value: OptionsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429896205635384, guid: 28fdaedf686cb394ba208418f1942254, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224164789533145404, guid: 28fdaedf686cb394ba208418f1942254,
         type: 3}
@@ -822,30 +826,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28fdaedf686cb394ba208418f1942254, type: 3}
---- !u!114 &3481346145101642633 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5745988269442438657, guid: 28fdaedf686cb394ba208418f1942254,
-    type: 3}
-  m_PrefabInstance: {fileID: 9218270562971348360}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0512fdb0eb251c14ab24e888559b0aa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5285506780712434473 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3941780338167027361, guid: 28fdaedf686cb394ba208418f1942254,
-    type: 3}
-  m_PrefabInstance: {fileID: 9218270562971348360}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5bc69e2a3ac6040a577b35b850a545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5388356430798443722 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3831060922822441282, guid: 28fdaedf686cb394ba208418f1942254,

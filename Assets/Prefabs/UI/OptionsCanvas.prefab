@@ -268,7 +268,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036187108131694}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8699bfababe01574c8b4e96cbc18e8f5, type: 2}
   m_CullingMode: 0
@@ -2009,6 +2009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseCanvas: {fileID: 1036187108131694}
   LevelCanvas: {fileID: 3941780337452094918}
+  GameOverCanvas: {fileID: 3941780337894478415}
   SettingsCanvas: {fileID: 0}
   AudioCanvas: {fileID: 0}
   ControlsCanvas: {fileID: 0}
@@ -6983,6 +6984,12 @@ RectTransform:
 --- !u!1 &3941780337452094918 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5285506780627721840, guid: 19a2b78b36fa0f04cae65a875d2fe6ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 9218270564245326774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3941780337894478415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5285506781338507769, guid: 19a2b78b36fa0f04cae65a875d2fe6ec,
     type: 3}
   m_PrefabInstance: {fileID: 9218270564245326774}
   m_PrefabAsset: {fileID: 0}
