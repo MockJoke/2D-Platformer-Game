@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,7 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private Button levelBtn;
     [SerializeField] private string levelName;
 
-    private void Awake()
+    void Awake()
     {
         if (levelBtn == null)
             levelBtn = GetComponent<Button>();
@@ -18,7 +17,12 @@ public class LevelLoader : MonoBehaviour
         levelBtn.onClick.AddListener(onLevelBtnClick); 
     }
 
-    public void onLevelBtnClick()
+    void Start()
+    {
+        setLevelStatusOnButton();
+    }
+
+    private void onLevelBtnClick()
     {
         // checking the levelStatus
         LevelStatus levelStatus = LevelManager.Instance.GetLevelStatus(levelName);
@@ -26,20 +30,25 @@ public class LevelLoader : MonoBehaviour
         switch (levelStatus)
         {
             case LevelStatus.Locked:
-                Debug.Log("Cant play this level till you unlock it!");
+                Debug.Log("Can't play this level till you unlock it!");
                 break;
 
             case LevelStatus.Unlocked:
                 SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
                 SceneManager.LoadScene(levelName);
-                OptionsManager.Instance.ToggleLevelCanvas(true);
+                //OptionsManager.Instance.ToggleLevelCanvas(true);
                 break;
 
             case LevelStatus.Completed:
                 SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
                 SceneManager.LoadScene(levelName);
-                OptionsManager.Instance.ToggleLevelCanvas(true);
+                //OptionsManager.Instance.ToggleLevelCanvas(true);
                 break;
         }
+    }
+
+    private void setLevelStatusOnButton()
+    {
+        levelBtn.interactable = LevelManager.Instance.GetLevelStatus(levelName) != LevelStatus.Locked;
     }
 }
