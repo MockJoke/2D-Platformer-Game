@@ -1,21 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //when a player falls off the platform
 public class DeathController : MonoBehaviour
 {
+    [SerializeField] private HealthController healthController;
+
+    void Start()
+    {
+        if (healthController == null)
+            healthController = FindObjectOfType<HealthController>();
+    }
+
     public void OnDeathFromFall()
     {
         SoundManager.Instance.Play(SoundManager.Sounds.PlayerDeath);
-        PlayerDied(true);
+        PlayerDied();
     }
 
-    public void PlayerDied(bool fromWater)
+    public void PlayerDied()
     {
-        GameManager.Instance.healthController.LoseLife(fromWater); 
+        healthController.LoseLife(); 
 
         Invoke(nameof(ReloadScene), 1.5f);
     }

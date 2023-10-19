@@ -12,17 +12,24 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Controls")]
     [SerializeField] private float runSpeed = 40f;   
     private float horizontalMove = 0f;
+    private bool canMove = true;
+    
+    [Space]
+    [SerializeField] private float flickeringDuration = 0.1f;
     
     [Header("Input related fields for variable jump")]
-    private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
     [SerializeField] private float buttonPressWindow = 0.5f;            // Threshold amount of time for the button input
+    private float buttonPressedTime = 0f;                               // Amount of time for which the input button was being pressed
     private bool jumpCancelled = false;                                 // Bool to keep track of the jump input for cancellation
-
-    private DeathController deathController;
+    
+    [Header("Controllers")]
+    [SerializeField] private DeathController deathController;
+    [SerializeField] private ScoreController scoreController;
+    [SerializeField] private HealthController healthController;
+    
     private Vector3 initialPos;
 
     private Coroutine hurtFlickerCoroutine = null;
-    [SerializeField] private float flickeringDuration = 0.1f;
     
     // Animator hash strings
     private static readonly int isJumpingAnimString = Animator.StringToHash("isJumping");
@@ -39,8 +46,15 @@ public class PlayerController : MonoBehaviour
         if (playerMovement == null)
             playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         
-        deathController = FindObjectOfType<DeathController>();
+        if (deathController == null)
+            deathController = FindObjectOfType<DeathController>();
 
+        if (scoreController == null)
+            scoreController = FindObjectOfType<ScoreController>();
+
+        if (healthController == null)
+            healthController = FindObjectOfType<HealthController>();
+        
         initialPos = transform.position;
     }
 
@@ -51,6 +65,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Space) || (buttonPressedTime > buttonPressWindow))
+        {
+            jumpAnimTrigger(false);
+        }
+        
+        if (canMove is false) 
+            return;
+        
         runAnim();
         crouchAnimTrigger();
 
@@ -83,11 +105,6 @@ public class PlayerController : MonoBehaviour
             {
                 jumpAnimTrigger(false);
             }
-        }
-        
-        if (Input.GetKeyUp(KeyCode.Space) || (buttonPressedTime > buttonPressWindow))
-        {
-            jumpAnimTrigger(false);
         }
     }
     
@@ -185,7 +202,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.PushPlayerOnHurting();
         // StartFlickering();
         damageable.EnableInvulnerability();
-        GameManager.Instance.healthController.LoseLife();
+        healthController.LoseLife();
         StartCoroutine(TimeDelayForHurtingAgain());
     }
     
@@ -205,6 +222,8 @@ public class PlayerController : MonoBehaviour
     {
         float timer = 0f;
 
+        canMove = false;
+
         while (timer < damageable.invulnerabilityDuration)
         {
             spriteRenderer.enabled = !spriteRenderer.enabled;
@@ -218,6 +237,7 @@ public class PlayerController : MonoBehaviour
     private void StopFlickering()
     {
         StopCoroutine(hurtFlickerCoroutine);
+        canMove = true;
         spriteRenderer.enabled = true;
     }
     
@@ -231,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
     public bool HasKeys()
     {
-        return GameManager.Instance.scoreController.HasAllKeys();
+        return scoreController.HasAllKeys();
     }
     
     public void OnLevelComplete()
@@ -242,7 +262,7 @@ public class PlayerController : MonoBehaviour
 
     public void PickUpKey()
     {
-        GameManager.Instance.scoreController.AddKey(); 
+        scoreController.AddKey(); 
     }
     
     #region INPUT SYSTEM ACTION METHODS
