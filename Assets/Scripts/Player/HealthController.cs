@@ -4,18 +4,16 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
-    [SerializeField] private Image[] lives; 
-    private int livesCount = 3;
-
-    public Action<bool> OnDamage;
-
-    public void LoseLife(bool fromWater)
+    [SerializeField] private Image[] lives;
+    private int livesCount = 5;
+    
+    public void LoseLife()
     {
         livesCount--;
         
         if(livesCount > 0)
         {
-            OnDamage?.Invoke(fromWater);
+            //OnDamage?.Invoke(fromWater);
 
             lives[livesCount].gameObject.SetActive(false);
 
@@ -23,6 +21,10 @@ public class HealthController : MonoBehaviour
             {
                 lives[livesCount].gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            GameManager.Instance.gameOverController.GameOver();
         }
     }
 }
