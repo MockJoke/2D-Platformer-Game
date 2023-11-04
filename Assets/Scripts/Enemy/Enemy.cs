@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] patrolSpots;
     [SerializeField] protected float attackAgainDelay = 3.5f;
     private int currPatrolSpotIndex = 0;
-    
+
+    [SerializeField] protected bool shouldMove = true;
     protected bool canMove = true;
     protected bool isDying = false;
     private bool isMovingRight;
@@ -39,7 +40,7 @@ public class Enemy : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (canMove && !isHit)
+        if (shouldMove && canMove && !isHit)
             Move();
     }
     
