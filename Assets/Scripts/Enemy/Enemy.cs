@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour
     {
         isDying = false;
         damageable.SetHealth(damageable.startingHealth);
+        
+        isMovingRight = transform.position.x < patrolSpots[currPatrolSpotIndex].position.x;
     }
 
     protected void FixedUpdate()
