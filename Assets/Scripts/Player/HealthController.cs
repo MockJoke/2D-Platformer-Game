@@ -13,8 +13,6 @@ public class HealthController : MonoBehaviour
         
         if(livesCount > 0)
         {
-            //OnDamage?.Invoke(fromWater);
-
             lives[livesCount].gameObject.SetActive(false);
 
             if (livesCount == 0)
