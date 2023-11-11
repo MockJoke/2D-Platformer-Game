@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Controls")]
     [SerializeField] private float runSpeed = 40f;   
     private float horizontalMove = 0f;
-    private bool canMove = true;
+    public bool canMove = true;
     
     [Space]
     [SerializeField] private float flickeringDuration = 0.1f;

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -17,28 +18,43 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool shouldMove = true;
     protected bool canMove = true;
     protected bool isDying = false;
-    private bool isMovingRight;
+    protected bool isMovingRight;
+    protected Vector2 spriteForward;
+    
+    [Header("Scanning settings")]
+    [Tooltip("The angle of the forward of the view cone. 0 is forward of the sprite, 90 is up, 180 behind etc.")]
+    [Range(0.0f,360.0f)]
+    [SerializeField] protected float viewDirection = 0.0f;
+    [Range(0.0f, 360.0f)]
+    [SerializeField] protected float viewFov;
+    [SerializeField] protected float viewDistance;
+    [Tooltip("Time in seconds without the target in the view cone before the target is considered lost from sight")]
+    [SerializeField] protected float timeBeforeTargetLost = 3.0f;
+    protected float timeSinceLastTargetView;
 
     private readonly bool isHit = false;
     private static readonly int deathAnimString = Animator.StringToHash("Die");
     private static readonly int hitAnimString = Animator.StringToHash("Hit");
     protected static readonly int AttackAnimString = Animator.StringToHash("Attack");
+    protected static readonly int SpottedAnimString = Animator.StringToHash("Spotted");
     
-    protected void Awake()
+    protected virtual void Awake()
     {
         if (boxCollider == null)
             boxCollider = this.GetComponent<BoxCollider2D>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         isDying = false;
         damageable.SetHealth(damageable.startingHealth);
         
         isMovingRight = transform.position.x < patrolSpots[currPatrolSpotIndex].position.x;
+
+        spriteForward = isMovingRight ? Vector2.right : Vector2.left;
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (shouldMove && canMove && !isHit)
             Move();
@@ -64,7 +80,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Flip()
+    protected void Flip()
     {
         if (isMovingRight)
         {
@@ -76,6 +92,8 @@ public class Enemy : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
             isMovingRight = true;
         }
+        
+        spriteForward = isMovingRight ? Vector2.right : Vector2.left;
     }
 
     public void OnHit()
@@ -106,5 +124,25 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        //draw the cone of view
+        Vector3 forward = isMovingRight ? Vector2.right : Vector2.left;
+        forward = Quaternion.Euler(0, 0, isMovingRight ? viewDirection : -viewDirection) * forward;
+
+        if (GetComponent<SpriteRenderer>().flipX) forward.x = -forward.x;
+
+        Vector3 endpoint = transform.position + (Quaternion.Euler(0, 0, viewFov * 0.5f) * forward);
+
+        Handles.color = new Color(0, 1.0f, 0, 0.2f);
+        Handles.DrawSolidArc(transform.position, -Vector3.forward, (endpoint - transform.position).normalized, viewFov, viewDistance);
+
+        //Draw attack range
+        // Handles.color = new Color(1.0f, 0,0, 0.1f);
+        // Handles.DrawSolidDisc(transform.position, Vector3.back, meleeRange);
+    }
+#endif
 }
 

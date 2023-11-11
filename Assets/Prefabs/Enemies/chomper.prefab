@@ -263,6 +263,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attackAgainDelay: 3.5
+  shouldMove: 1
+  viewDirection: 0
+  viewFov: 360
+  viewDistance: 5
+  timeBeforeTargetLost: 2
 --- !u!114 &4820510670081521586
 MonoBehaviour:
   m_ObjectHideFlags: 0
