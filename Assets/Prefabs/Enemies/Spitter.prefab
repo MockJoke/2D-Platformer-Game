@@ -176,9 +176,7 @@ MonoBehaviour:
   damageable: {fileID: 6957643701234703619}
   boxCollider: {fileID: 61777735193197298}
   speed: 5
-  patrolSpots:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolSpots: []
   attackAgainDelay: 3.5
   shouldMove: 0
   viewDirection: 0

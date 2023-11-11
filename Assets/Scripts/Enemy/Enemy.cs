@@ -48,8 +48,15 @@ public class Enemy : MonoBehaviour
     {
         isDying = false;
         damageable.SetHealth(damageable.startingHealth);
-        
-        isMovingRight = transform.position.x < patrolSpots[currPatrolSpotIndex].position.x;
+
+        if (shouldMove)
+        {
+            isMovingRight = transform.position.x < patrolSpots[currPatrolSpotIndex].position.x;
+        }
+        else
+        {
+            isMovingRight = transform.eulerAngles.y == 0;
+        }
 
         spriteForward = isMovingRight ? Vector2.right : Vector2.left;
     }
