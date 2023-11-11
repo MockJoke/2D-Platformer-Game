@@ -6,34 +6,34 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 020503075c0108020f5d0d734070064413151e7f7f2d7f657e2f4b35e1b16160
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-      value: 5b02065e0606085a0c5f587043725d44414f1e2f747d72627a2a4532bbe1356d
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 5606500054505d0a5a5c597212200d44414e4f7c2f7a2560292a4d6bbae5323d
-      flags: 0
-    RecentlyUsedSceneGuid-3:
-      value: 5605075006035e5e545c5a7516720844434f1a797d2e25342e7b4d30e6b26439
-      flags: 0
-    RecentlyUsedSceneGuid-4:
       value: 5753000455505b0f5b080f7514215d44444e4d2b7f7020347d7a4f67b3b3626a
       flags: 0
-    RecentlyUsedSceneGuid-5:
+    RecentlyUsedSceneGuid-1:
       value: 565304055751505f090a5d7741215e444e4e1c287d7127642b2b4b60b6b3666f
       flags: 0
-    RecentlyUsedSceneGuid-6:
+    RecentlyUsedSceneGuid-2:
       value: 525551545c070d0b5b5c0f7b41765c44154f1a29287b7161792a1b30e3b36c6e
       flags: 0
-    RecentlyUsedSceneGuid-7:
+    RecentlyUsedSceneGuid-3:
       value: 505000500454510b5a5d08241674084442164a2e7a29703228791b64b6b7363e
       flags: 0
-    RecentlyUsedSceneGuid-8:
+    RecentlyUsedSceneGuid-4:
+      value: 5605075006035e5e545c5a7516720844434f1a797d2e25342e7b4d30e6b26439
+      flags: 0
+    RecentlyUsedSceneGuid-5:
       value: 5700030007545f0d540b55764077094443164f78797b20367a711e61e0b9306f
       flags: 0
-    RecentlyUsedSceneGuid-9:
+    RecentlyUsedSceneGuid-6:
       value: 5a07040454070f03555f5576402707444f4f4b787b7b72627c2b1831e1b66d6d
+      flags: 0
+    RecentlyUsedSceneGuid-7:
+      value: 0653575253015e5d0b5e5e7b47725c44141649287e7871312b794b65e0e5603c
+      flags: 0
+    RecentlyUsedSceneGuid-8:
+      value: 06095655070d0d0c0e0d0827457a09444f4e4c732a2a22692e7d4d65e3b6323c
+      flags: 0
+    RecentlyUsedSceneGuid-9:
+      value: 020503075c0108020f5d0d734070064413151e7f7f2d7f657e2f4b35e1b16160
       flags: 0
     RecentlyUsedScenePath-0:
       value: 22424703114646680e0b0227036c6a0012160c2f2804232628250e7cd8ef3a3db6a923e7ee2e26
