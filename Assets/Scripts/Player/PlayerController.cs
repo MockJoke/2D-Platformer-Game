@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
         }
         
         playerMovement.Move(horizontalMove * Time.fixedDeltaTime,  playerMovement.isCrouching, playerMovement.isJumping);
-        //playerMovement.isJumping = false;
     }
     #endregion
     
