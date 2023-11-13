@@ -10,18 +10,18 @@ public class Enemy : MonoBehaviour
     
     [SerializeField] private BoxCollider2D boxCollider;
     
+    [Header("Movement Data")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private Transform[] patrolSpots;
-    [SerializeField] protected float attackAgainDelay = 3.5f;
-    private int currPatrolSpotIndex = 0;
-
     [SerializeField] protected bool shouldMove = true;
+    [SerializeField] private Transform[] patrolSpots;
+    private int currPatrolSpotIndex = 0;
     protected bool canMove = true;
-    protected bool isDying = false;
     protected bool isMovingRight;
+
     protected Vector2 spriteForward;
+    protected bool isDying = false;
     
-    [Header("Scanning settings")]
+    [Header("Scanning Settings")]
     [Tooltip("The angle of the forward of the view cone. 0 is forward of the sprite, 90 is up, 180 behind etc.")]
     [Range(0.0f,360.0f)]
     [SerializeField] protected float viewDirection = 0.0f;
@@ -31,7 +31,10 @@ public class Enemy : MonoBehaviour
     [Tooltip("Time in seconds without the target in the view cone before the target is considered lost from sight")]
     [SerializeField] protected float timeBeforeTargetLost = 3.0f;
     protected float timeSinceLastTargetView;
-
+    
+    [Space]
+    [SerializeField] protected float attackAgainDelay = 3.5f;
+    
     private readonly bool isHit = false;
     private static readonly int deathAnimString = Animator.StringToHash("Die");
     private static readonly int hitAnimString = Animator.StringToHash("Hit");
